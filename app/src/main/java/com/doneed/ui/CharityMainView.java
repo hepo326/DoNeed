@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.doneed.MapsActivity;
 import com.doneed.R;
 import com.doneed.adapter.MyPagerAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,12 +29,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class CharityMainView extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private GoogleMap mMap;
-    private TabLayout tabs;
-    private ViewPager viewPager;
-    private MyPagerAdapter pagerAdapter;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -43,18 +41,21 @@ public class CharityMainView extends AppCompatActivity
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 //                    mTextMessage.setText(R.string.title_home);
-                    tabs.setVisibility(View.VISIBLE);
+                    HomeFragment homeFragment = new HomeFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                     return true;
                 case R.id.navigation_map:
 //                    mTextMessage.setText(R.string.title_map);
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(CharityMainView.this);
-                    tabs.setVisibility(View.VISIBLE);
+                    MapsActivity mapFragment = new MapsActivity();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,mapFragment).commit();
+
+
                     return true;
                 case R.id.navigation_stock:
 //                    mTextMessage.setText(R.string.title_stock);
-                    tabs.setVisibility(View.GONE);
+                    HomeFragment homeFragment2 = new HomeFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment2).commit();
+
                     return true;
             }
             return false;
@@ -74,12 +75,7 @@ public class CharityMainView extends AppCompatActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        setupViewPager(viewPager);
 
-        tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-        setupTabIcons();
 
 
 
@@ -92,32 +88,12 @@ public class CharityMainView extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        HomeFragment homeFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
     }
 
     @SuppressWarnings("ConstantConditions")
-    private void setupTabIcons() {
-        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabOne.setText(getString(R.string.first_tab_title));
-        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_food_24dp, 0, 0);
-        tabs.getTabAt(0).setCustomView(tabOne);
 
-        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabTwo.setText(getString(R.string.second_tab_title));
-        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_shirt_24dp, 0, 0);
-        tabs.getTabAt(1).setCustomView(tabTwo);
-
-        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabThree.setText(getString(R.string.third_tab_title));
-        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_dollar_24dp, 0, 0);
-        tabs.getTabAt(2).setCustomView(tabThree);
-
-        TextView tabFour = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-        tabFour.setText(getString(R.string.fourth_tab_title));
-        tabFour.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_others_24dp, 0, 0);
-        tabs.getTabAt(3).setCustomView(tabFour);
-
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -178,23 +154,7 @@ public class CharityMainView extends AppCompatActivity
         return true;
     }
 
-    public void setupViewPager(ViewPager upViewPager) {
-        pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.first_tab_title));
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.second_tab_title));
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.third_tab_title));
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.fourth_tab_title));
 
-        viewPager.setAdapter(pagerAdapter);
-    }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
 }
