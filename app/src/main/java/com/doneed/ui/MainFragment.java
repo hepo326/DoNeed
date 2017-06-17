@@ -1,6 +1,6 @@
 package com.doneed.ui;
 
-import android.app.ProgressDialog;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
 
-    private static final String KEY_POSITION="position";
 
     RecyclerView recyclerView;
     RecycleAdapter donatorAdapter;
@@ -34,13 +33,7 @@ public class MainFragment extends Fragment {
     String[]details=new String[]{"Nothing important","Bla bla" , "Meow" , "Rawr"," "};
     String profileimg="R.drawable.ic_account";
 
-    public static MainFragment newInstance(int position) {
-        MainFragment frag=new MainFragment();
-        Bundle args=new Bundle();
-        args.putInt(KEY_POSITION, position);
-        frag.setArguments(args);
-        return(frag);
-    }
+
 
 //    public void updateMovies(){
 //
@@ -69,34 +62,34 @@ public class MainFragment extends Fragment {
 
         donatorAdapter.clear();
 
-        ProgressDialog prog=ProgressDialog.show(getContext(), "Loading!", "Please Wait ... ");
 
         for(int i=0 ; i<4; i++)
         donatorData.add(new Donators(ID[i], Names[i], profileimg,
                 Phones[i], address[i], details[i], Cateogry[i], amount[i]) );
         donatorAdapter.setArrayData(donatorData);
 
-        prog.dismiss();
 
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View result=inflater.inflate(R.layout.main_fragment_content, container, false);
+
+        return(inflater.inflate(R.layout.main_fragment_content, container, false));
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         donatorAdapter = new RecycleAdapter(donatorData, getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView = (RecyclerView) result.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         if (recyclerView != null) {
             recyclerView.setAdapter(donatorAdapter);
         }
-
-        return(result);
     }
-
-
 }
