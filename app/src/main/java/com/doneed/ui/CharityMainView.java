@@ -19,11 +19,18 @@ import android.widget.TextView;
 
 import com.doneed.R;
 import com.doneed.adapter.MyPagerAdapter;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class CharityMainView extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
+    private GoogleMap mMap;
     private TabLayout tabs;
     private ViewPager viewPager;
     private MyPagerAdapter pagerAdapter;
@@ -40,6 +47,9 @@ public class CharityMainView extends AppCompatActivity
                     return true;
                 case R.id.navigation_map:
 //                    mTextMessage.setText(R.string.title_map);
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.map);
+                    mapFragment.getMapAsync(CharityMainView.this);
                     tabs.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_stock:
@@ -178,4 +188,13 @@ public class CharityMainView extends AppCompatActivity
         viewPager.setAdapter(pagerAdapter);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
 }

@@ -17,9 +17,6 @@
     <string name="fourth_tab_title">Others</string>
 
 
-
-
-
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -35,5 +32,6 @@
         completions."
     </string>
     <string name="delieverd_check_box_title">Delieverd</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
