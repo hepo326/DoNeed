@@ -10,10 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.doneed.MapsFragment;
 import com.doneed.R;
 import com.doneed.adapter.MyPagerAdapter;
 
-public class HomeFragment extends Fragment {
+public class MapTabs extends Fragment {
 
     private TabLayout tabs;
     private ViewPager viewPager;
@@ -31,7 +32,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         return(inflater.inflate(R.layout.home_fragment, container, false));
+        return(inflater.inflate(R.layout.home_fragment, container, false));
     }
 
     @Override
@@ -39,10 +40,10 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         pagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.first_tab_title));
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.second_tab_title));
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.third_tab_title));
-        pagerAdapter.addFrag(new MainFragment(), getString(R.string.fourth_tab_title));
+        pagerAdapter.addFrag(new MapsFragment(), getString(R.string.first_tab_title));
+        pagerAdapter.addFrag(new MapsFragment(), getString(R.string.second_tab_title));
+        pagerAdapter.addFrag(new MapsFragment(), getString(R.string.third_tab_title));
+        pagerAdapter.addFrag(new MapsFragment(), getString(R.string.fourth_tab_title));
 
         viewPager.setAdapter(pagerAdapter);
 

@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.doneed.MapsActivity;
 import com.doneed.R;
 
 
@@ -33,7 +32,7 @@ public class CharityMainView extends AppCompatActivity
                     return true;
                 case R.id.navigation_map:
 //                    mTextMessage.setText(R.string.title_map);
-                    MapsActivity mapFragment = new MapsActivity();
+                    MapTabs mapFragment = new MapTabs();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
 
                     return true;
